@@ -8,7 +8,9 @@ const config = {
   entry: path.join(SRCDIR, 'index.js'),
   output: {
     path: DISTDIR,
-    filename: 'fetch.jsonapi.js'
+    filename: 'fetch.jsonapi.js',
+    library: 'jsonapi',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [

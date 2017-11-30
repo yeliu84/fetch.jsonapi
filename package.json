@@ -2,7 +2,7 @@
   "name": "fetch.jsonapi",
   "version": "0.0.1",
   "description": "Fetch JSON API with ease",
-  "main": "src/index.js",
+  "main": "dist/fetch.jsonapi.js",
   "repository": "https://github.com/jaux/fetch.jsonapi",
   "author": "Ye Liu",
   "license": "MIT",
