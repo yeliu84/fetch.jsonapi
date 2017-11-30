@@ -1,0 +1,23 @@
+{
+  "name": "fetch.jsonapi",
+  "version": "0.0.1",
+  "description": "Fetch JSON API with ease",
+  "main": "src/index.js",
+  "repository": "https://github.com/jaux/fetch.jsonapi",
+  "author": "Ye Liu",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.9.1"
+  },
+  "dependencies": {
+    "fetch.json": "^0.2.2",
+    "lodash": "^4.17.4"
+  },
+  "scripts": {
+    "build": "babel-node ./node_modules/.bin/webpack"
+  }
+}
