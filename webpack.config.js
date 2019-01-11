@@ -5,6 +5,7 @@ const SRCDIR = path.join(__dirname, 'src')
 const DISTDIR = path.join(__dirname, 'dist')
 
 const config = {
+  mode: 'production',
   entry: path.join(SRCDIR, 'index.js'),
   output: {
     path: DISTDIR,
@@ -21,16 +22,13 @@ const config = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['env', { modules: false }]
+              ['@babel/preset-env', { modules: false }]
             ]
           }
         }
       }
     ]
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin()
-  ]
+  }
 }
 
 export default config
