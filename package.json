@@ -11,15 +11,21 @@
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.5",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.13.1",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1"
   },
   "dependencies": {
     "fetch.json": "^0.2.2",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "query-string": "^6.2.0"
   },
   "scripts": {
-    "build": "babel-node ./node_modules/.bin/webpack"
+    "build": "babel-node ./node_modules/.bin/webpack",
+    "test": "jest"
   }
 }
