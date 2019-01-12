@@ -1,5 +1,6 @@
 import fetchJson from 'fetch.json'
 import { Entity, Collection } from './entity'
+import { buildUrl } from './utils'
 
 const createEntity = raw => {
   if (_.isArray(raw.data)) {
@@ -9,14 +10,20 @@ const createEntity = raw => {
 }
 
 const jsonApi = fetchFn => {
-  return (url, data) => {
+  return (url, data, options) => {
     if (data) {
       if (_.isFunction(data.toJSON)) {
         data = data.toJSON()
       }
       data = { data }
     }
-    return fetchFn(url, data).then(createEntity)
+    if (fetchFn === fetchJson.get) {
+      if (data && !options) {
+        options = data
+      }
+      url = buildUrl(url, options)
+    }
+    return fetchFn(url, data, options).then(createEntity)
   }
 }
 
