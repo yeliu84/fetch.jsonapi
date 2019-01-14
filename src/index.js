@@ -9,7 +9,7 @@ const createEntity = raw => {
   return new Entity(raw)
 }
 
-const jsonApi = fetchFn => {
+const wrapFetch = (createEntity, fetchFn) => {
   return (url, data, options) => {
     if (data) {
       if (_.isFunction(data.toJSON)) {
@@ -28,8 +28,9 @@ const jsonApi = fetchFn => {
 }
 
 const request = {}
+const wrapper = wrapFetch.bind(null, createEntity)
 ;['get', 'post', 'put', 'patch', 'delete'].forEach(method => {
-  request[method] = jsonApi(fetchJson[method])
+  request[method] = wrapper(fetchJson[method])
 })
 
 request.headers = fetchJson.headers.bind(jsonApi)
@@ -38,8 +39,8 @@ export {
   request,
   Entity,
   Collection,
-  jsonApi,
   createEntity,
+  wrapFetch,
   buildUrl
 }
 
