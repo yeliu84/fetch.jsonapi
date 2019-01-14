@@ -22,6 +22,14 @@ export const buildUrl = (originalUrl, options = {}) => {
   delete options.sort
   delete options.filter
   delete options.page
+
+  Object.keys(options).forEach(k => {
+    if (options[k] === null) {
+      Object.assign(query, qs.parse(k))
+      delete options[k]
+    }
+  })
+
   Object.assign(query, options)
 
   const queryString = qs.stringify(query)

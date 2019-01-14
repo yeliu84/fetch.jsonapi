@@ -115,3 +115,9 @@ test('build url with page parameters', () => {
   expect(result).toBe(`${url}?${encodeURIComponent('page[number]')}=1&${encodeURIComponent('page[size]')}=500`)
 })
 
+test('build url with formatted query', () => {
+  const result = buildUrl(url, {
+    'filter[author]=Peter&sort=date': null
+  })
+  expect(result).toBe(`${url}?${encodeURIComponent('filter[author]')}=Peter&sort=date`)
+})
