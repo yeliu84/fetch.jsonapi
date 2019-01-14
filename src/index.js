@@ -11,17 +11,18 @@ const createEntity = raw => {
 
 const wrapFetch = (createEntity, fetch, method) => {
   return (url, data, options) => {
+    if (method === 'get') {
+      if (data && !options) {
+        options = data
+        data = null
+      }
+      url = buildUrl(url, options)
+    }
     if (data) {
       if (_.isFunction(data.toJSON)) {
         data = data.toJSON()
       }
       data = { data }
-    }
-    if (method === 'get') {
-      if (data && !options) {
-        options = data
-      }
-      url = buildUrl(url, options)
     }
     return fetch[method](url, data, options).then(createEntity)
   }
