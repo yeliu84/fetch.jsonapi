@@ -105,3 +105,13 @@ test('build url with multiple filters multiple values', () => {
   expect(result).toBe(expected)
 })
 
+test('build url with page parameters', () => {
+  const result = buildUrl(url, {
+    page: {
+      number: 1,
+      size: 500
+    }
+  })
+  expect(result).toBe(`${url}?${encodeURIComponent('page[number]')}=1&${encodeURIComponent('page[size]')}=500`)
+})
+

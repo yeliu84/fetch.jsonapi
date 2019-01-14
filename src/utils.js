@@ -13,10 +13,15 @@ export const buildUrl = (originalUrl, options = {}) => {
     const filterKey = `filter[${k}]`
     query[filterKey] = paramsToString(query[filterKey], options.filter[k])
   })
+  Object.keys(options.page || {}).forEach(k => {
+    const pageKey = `page[${k}]`
+    query[pageKey] = options.page[k]
+  })
 
   delete options.include
   delete options.sort
   delete options.filter
+  delete options.page
   Object.assign(query, options)
 
   const queryString = qs.stringify(query)
