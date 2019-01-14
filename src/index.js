@@ -9,7 +9,7 @@ const createEntity = raw => {
   return new Entity(raw)
 }
 
-const wrapFetch = (createEntity, fetchFn) => {
+const wrapFetch = (createEntity, fetch, method) => {
   return (url, data, options) => {
     if (data) {
       if (_.isFunction(data.toJSON)) {
@@ -17,20 +17,20 @@ const wrapFetch = (createEntity, fetchFn) => {
       }
       data = { data }
     }
-    if (fetchFn === fetchJson.get) {
+    if (method === 'get') {
       if (data && !options) {
         options = data
       }
       url = buildUrl(url, options)
     }
-    return fetchFn(url, data, options).then(createEntity)
+    return fetch[method](url, data, options).then(createEntity)
   }
 }
 
 const request = {}
 const wrapper = wrapFetch.bind(null, createEntity)
 ;['get', 'post', 'put', 'patch', 'delete'].forEach(method => {
-  request[method] = wrapper(fetchJson[method])
+  request[method] = wrapper(fetchJson, method)
 })
 
 request.headers = fetchJson.headers.bind(request)
