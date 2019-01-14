@@ -98,6 +98,9 @@ export class Collection extends Base {
   get(id) {
     return _.find(this.data, item => item.id === id)
   }
+  getAt(i) {
+    return this.data[i]
+  }
   set(item) {
     const i = _.findIndex(this.data, _item => _item.id === item.id)
     if (i < 0) {
@@ -111,6 +114,9 @@ export class Collection extends Base {
   }
   size() {
     return this.data.length
+  }
+  each(fn) {
+    this.data.forEach(fn)
   }
   map(fn) {
     return this.data.map(fn)
