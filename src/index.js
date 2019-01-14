@@ -33,7 +33,7 @@ const wrapper = wrapFetch.bind(null, createEntity)
   request[method] = wrapper(fetchJson[method])
 })
 
-request.headers = fetchJson.headers.bind(jsonApi)
+request.headers = fetchJson.headers.bind(request)
 
 export {
   request,
