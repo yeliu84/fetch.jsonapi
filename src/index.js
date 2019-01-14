@@ -38,6 +38,7 @@ export {
   request,
   Entity,
   Collection,
+  jsonApi,
   createEntity,
   buildUrl
 }
