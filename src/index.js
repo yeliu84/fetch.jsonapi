@@ -37,7 +37,8 @@ request.headers = fetchJson.headers.bind(jsonApi)
 export {
   request,
   Entity,
-  Collection
+  Collection,
+  buildUrl
 }
 
 export default request
