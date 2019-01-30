@@ -17,7 +17,7 @@ const config = {
     rules: [
       {
         test: /.js$/,
-        exclude: /node_modules(?!\/query-string)/,
+        exclude: /node_modules\/(?!(query-string|strict-uri-encode))/,
         use: {
           loader: 'babel-loader',
           options: {
