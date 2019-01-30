@@ -1,6 +1,7 @@
 src/
 tests/
+fetch.jsonapi-*.tgz
+webpack.config.js
 .babelrc
 .gitignore
-webpack.config.js
 yarn.lock
