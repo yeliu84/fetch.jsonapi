@@ -121,6 +121,9 @@ export class Collection extends Base {
   map(fn) {
     return this.data.map(fn)
   }
+  filter(fn) {
+    return this.data.filter(fn)
+  }
   sort(comparator) {
     this.data = this.data.sort(comparator)
     return this
