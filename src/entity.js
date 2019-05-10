@@ -52,10 +52,14 @@ export class Entity extends Base {
     let related = this.data.relationships[key].data
     if (_.isArray(related)) {
       return new Collection({
-        data: related.map(item => this.findIncluded(item) || item)
+        data: related.map(item => this.findIncluded(item) || item),
+        included: this._raw.included
       })
     }
-    return new Entity(this.findIncluded(related) || related)
+    return new Entity({
+      data: this.findIncluded(related) || related,
+      included: this._raw.included
+    })
   }
   removeRelated(key, id) {
     if (
