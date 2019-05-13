@@ -195,13 +195,13 @@ Sort the entities of the collection in place.
 
 Get a plain array of the collection, `Entity.toJSON()` is used to produce the elements of the array.
 
-**Entity.getLink(key)**
+**Collection.getLink(key)**
 
 Get a link from the `links` field.
 
 * `key` {String} The key of the link
 
-**Entity.getMeta(key)**
+**Collection.getMeta(key)**
 
 Get a meta value from the `meta` field.
 
