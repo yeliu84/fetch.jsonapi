@@ -13,21 +13,21 @@ const createEntity = raw => {
 }
 
 const wrapFetch = (createEntity, fetch, method) => {
-  return (url, data, options) => {
+  return (url, payload, options) => {
     if (method === 'get') {
-      if (data && !options) {
-        options = data
-        data = null
+      if (payload && !options) {
+        options = payload
+        payload = null
       }
       url = buildUrl(url, options)
     }
-    if (data) {
-      if (_.isFunction(data.toJSON)) {
-        data = data.toJSON()
+    if (payload) {
+      if (_.isFunction(payload.toJSON)) {
+        payload = payload.toJSON()
       }
-      data = { data }
+      payload = payload.data ? payload : { data: payload }
     }
-    return fetch[method](url, data, options).then(createEntity)
+    return fetch[method](url, payload, options).then(createEntity)
   }
 }
 
