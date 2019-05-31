@@ -60,3 +60,60 @@ test('Entity can get related resource with nested related data', () => {
   expect(avatar).toBeTruthy()
   expect(avatar.get('url')).toBeTruthy()
 })
+
+test('Resource with ID can be added to entity relationships', () => {
+  const entity = new Entity(entityData)
+  const dummyData = {
+    type: 'dummy-entity',
+    id: 'some-id',
+  }
+  const dummyEntity = new Entity({ data: dummyData })
+  entity.setRelated('dummy-entity', dummyEntity)
+  expect(entity.data.relationships['dummy-entity'].data.id).toBe(dummyData.id)
+  expect(entity.data.relationships['dummy-entity'].data.type).toBe(dummyData.type)
+  expect(entity.data.relationships['dummy-entity'].data.attributes).toBeFalsy()
+})
+
+test('Resource without ID can be added to entity relationships with lid', () => {
+  const entity = new Entity(entityData)
+  const dummyData = {
+    type: 'dummy-entity'
+  }
+  const dummyEntity = new Entity({ data: dummyData })
+  entity.setRelated('dummy-entity', dummyEntity)
+  expect(entity.data.relationships['dummy-entity'].data.type).toBe(dummyData.type)
+  expect(entity.data.relationships['dummy-entity'].data.lid).toBeTruthy()
+})
+
+test('Resource with attributes can be added to entity included', () => {
+  const entity = new Entity(entityData)
+  const dummyData = {
+    type: 'dummy-entity',
+    id: 'some-id',
+    attributes: {
+      name: 'Leonard'
+    }
+  }
+  const dummyEntity = new Entity({ data: dummyData })
+  entity.setRelated('dummy-entity', dummyEntity)
+  const included = entity.findIncluded(dummyData)
+  expect(included.id).toBe(dummyData.id)
+  expect(included.type).toBe(dummyData.type)
+  expect(included.attributes.name).toBe(dummyData.attributes.name)
+})
+
+test('Resource with attributes without ID can be added to entity included with lid', () => {
+  const entity = new Entity(entityData)
+  const dummyData = {
+    type: 'dummy-entity',
+    attributes: {
+      name: 'Leonard'
+    }
+  }
+  const dummyEntity = new Entity({ data: dummyData })
+  entity.setRelated('dummy-entity', dummyEntity)
+  const included = entity._raw.included.find(item => item.type === dummyData.type)
+  expect(included.lid).toBeTruthy()
+  expect(included.type).toBe(dummyData.type)
+  expect(included.attributes.name).toBe(dummyData.attributes.name)
+})

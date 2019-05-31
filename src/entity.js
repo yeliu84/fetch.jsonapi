@@ -1,8 +1,11 @@
 import _ from 'lodash'
 
+const getRandomId = () =>
+  `${Math.floor(Math.random() * (100000 - 10000)) + 10000}`
+
 class Base {
   constructor(raw) {
-    this._raw = raw || {}
+    this._raw = _.cloneDeep(raw) || {}
     this.data = this._raw.data
   }
   getLink(key) {
@@ -20,10 +23,13 @@ class Base {
   toJSON() {
     throw new Error('not implemented error')
   }
-  findIncluded({ type, id }) {
+  getRaw() {
+    return this._raw
+  }
+  findIncluded({ type, id, lid }) {
     return _.find(
       this._raw.included,
-      item => item.type === type && item.id === id
+      item => item.type === type && (item.id === id || item.lid === lid)
     )
   }
 }
@@ -60,6 +66,39 @@ export class Entity extends Base {
       data: this.findIncluded(related) || related,
       included: this._raw.included
     })
+  }
+  setRelated(key, resource) {
+    if (resource.toJSON) {
+      resource = resource.toJSON()
+    }
+    let related = []
+    const included = []
+    ;[].concat(resource).forEach(item => {
+      if (item.toJSON) {
+        item = item.toJSON()
+      }
+      if (!item.id) {
+        item.lid = getRandomId()
+      }
+      if (!_.isEmpty(item.attributes)) {
+        included.push(Object.assign({}, item))
+      }
+
+      delete item.attributes
+      related.push(item)
+    })
+    if (included.length > 0) {
+      this._raw.included = (this._raw.included || []).concat(included)
+    }
+    if (!_.isArray(resource)) {
+      related = related[0]
+    }
+    this.data.relationships = this.data.relationships || {}
+    this.data.relationships[key] = this.data.relationships[key] || {}
+    const data = this.data.relationships[key].data
+    this.data.relationships[key].data = data
+      ? [].concat(data, related)
+      : related
   }
   removeRelated(key, id) {
     if (
