@@ -32,10 +32,35 @@ class Base {
     return this._raw
   }
   findIncluded({ type, id, lid }) {
-    return _.find(
-      this._raw.included,
-      item => item.type === type && (item.id === id || item.lid === lid)
-    )
+    return (this._raw.included || []).find((item) => {
+      if (item.type !== type) {
+        return false
+      }
+      if (item.id) {
+        return item.id === id
+      }
+      if (item.lid) {
+        return item.lid === lid
+      }
+      return false
+    })
+  }
+  removeIncluded({ type, id, lid }) {
+    if ((this._raw.included || []).length < 1) {
+      return
+    }
+    this._raw.included = this._raw.included.filter(item => {
+      if (item.type !== type) {
+        return true
+      }
+      if (item.id) {
+        return item.id !== id
+      }
+      if (item.lid) {
+        return item.lid !== lid
+      }
+      return true
+    })
   }
 }
 
@@ -69,7 +94,7 @@ export class Entity extends Base {
       included: this._raw.included
     })
   }
-  setRelated(key, resource) {
+  setRelated(key, resource, replace = true) {
     if (resource.toJSON) {
       resource = resource.toJSON()
     }
@@ -89,18 +114,28 @@ export class Entity extends Base {
       delete item.attributes
       related.push(item)
     })
-    if (included.length > 0) {
-      this._raw.included = (this._raw.included || []).concat(included)
-    }
     if (!_.isArray(resource)) {
       related = related[0]
     }
+
     this.data.relationships = this.data.relationships || {}
+    if (replace) {
+      this.removeRelated(key)
+    }
     this.data.relationships[key] = this.data.relationships[key] || {}
     const data = this.data.relationships[key].data
     this.data.relationships[key].data = data
       ? [].concat(data, related)
       : related
+
+    if (included.length > 0) {
+      this._raw.included = (this._raw.included || []).concat(included)
+    }
+
+    return this
+  }
+  addRelated(key, resource) {
+    return this.setRelated(key, resource, false)
   }
   removeRelated(key, id) {
     if (
@@ -108,14 +143,22 @@ export class Entity extends Base {
       !this.data.relationships[key] ||
       !this.data.relationships[key].data
     ) {
-      return
+      return null
     }
-    let related = this.data.relationships[key].data
-    if (_.isArray(related)) {
+
+    const related = (this.data.relationships[key] || {}).data
+    if (!related) {
+      return null
+    }
+
+    if (_.isArray(related) && id) {
       this.data.relationships[key].data = related.filter(item => item.id !== id)
     } else {
       delete this.data.relationships[key]
     }
+    [].concat(related).forEach(this.removeIncluded.bind(this))
+
+    return related
   }
   toJSON() {
     return {
