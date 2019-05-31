@@ -3,6 +3,9 @@ import { Entity, Collection } from './entity'
 import { buildUrl } from './utils'
 
 const createEntity = raw => {
+  if (!raw.data) {
+    raw = { data: raw }
+  }
   if (_.isArray(raw.data)) {
     return new Collection(raw)
   }
