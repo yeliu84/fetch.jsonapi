@@ -3,14 +3,9 @@ import _ from 'lodash'
 const getRandomId = () =>
   `${Math.floor(Math.random() * (100000 - 10000)) + 10000}`
 
-const normalizeRawData = (raw) => {
-  raw = _.cloneDeep(raw)
-  return raw.data ? raw : { data: raw }
-}
-
 class Base {
   constructor(raw) {
-    this._raw = normalizeRawData(raw)
+    this._raw = _.cloneDeep(raw) || {}
     this.data = this._raw.data
   }
   getLink(key) {
@@ -67,6 +62,9 @@ class Base {
 export class Entity extends Base {
   constructor(...args) {
     super(...args)
+    if (!this.data) {
+      this.data = this._raw
+    }
     this.id = this.data.id
     this.type = this.data.type
     this.source = this.data.source
