@@ -201,14 +201,14 @@ export class Collection extends Base {
   each(fn) {
     this.data.forEach(fn)
   }
-  reduce(fn) {
-    return this.data.reduce(fn)
-  }
   map(fn) {
     return this.data.map(fn)
   }
   filter(fn) {
     return this.data.filter(fn)
+  }
+  reduce(...args) {
+    return this.data.reduce(...args)
   }
   sort(comparator) {
     this.data = this.data.sort(comparator)
