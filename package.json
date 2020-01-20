@@ -7,22 +7,21 @@
   "author": "Ye Liu",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.8.0",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.5",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "regenerator-runtime": "^0.13.1",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {
     "fetch.json": "^0.2.2",
     "lodash": "^4.17.4",
-    "query-string": "^6.2.0"
+    "query-string": "^6.10.1"
   },
   "scripts": {
     "build": "babel-node ./node_modules/.bin/webpack",

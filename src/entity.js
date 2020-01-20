@@ -201,6 +201,9 @@ export class Collection extends Base {
   each(fn) {
     this.data.forEach(fn)
   }
+  reduce(fn) {
+    return this.data.reduce(fn)
+  }
   map(fn) {
     return this.data.map(fn)
   }
