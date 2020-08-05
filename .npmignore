@@ -1,7 +1,8 @@
+.idea
+.DS_Store
+.gitignore
 src/
 tests/
 fetch.jsonapi-*.tgz
-webpack.config.js
 babel.config.json
-.gitignore
-.idea
+webpack.config.js
