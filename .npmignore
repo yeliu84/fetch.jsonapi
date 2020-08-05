@@ -2,6 +2,6 @@ src/
 tests/
 fetch.jsonapi-*.tgz
 webpack.config.js
-.babelrc
+babel.config.json
 .gitignore
-yarn.lock
+.idea
