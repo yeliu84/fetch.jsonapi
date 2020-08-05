@@ -19,7 +19,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "fetch.json": "^0.2.5",
+    "fetch.json": "^0.2.6",
     "lodash": "^4.17.19",
     "query-string": "^6.13.1"
   },
