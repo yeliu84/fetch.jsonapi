@@ -1,6 +1,6 @@
 {
   "name": "fetch.jsonapi",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Fetch JSON:API with ease",
   "main": "dist/fetch.jsonapi.js",
   "repository": "https://github.com/jaux/fetch.jsonapi",
